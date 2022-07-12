@@ -2,30 +2,27 @@
 
 namespace App\Service;
 
-use App\Entity\Article;
-use App\Repository\CommentRepository;
-
+use App\Entity\Category;
+use App\Repository\ArticleRepository;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Component\HttpFoundation\RequestStack;
 
-class CommentService
+class ArticleService
 {
     public function __construct(
         private RequestStack $requestStack,
-        private CommentRepository $commentRepository,
+        private ArticleRepository $articleRepository,
         private PaginatorInterface $paginator
     )
     {
     }
 
-
-    public function getPaginatedComments(?Article $article = null)
+    public function getPaginatedArticles(?Category $category = null)
     {
         $request =  $this->requestStack->getMainRequest();
         $page = $request->get('page',1);
         $limit = 2;
-        $commentsQuery = $this->commentRepository->findForPagination($article);
-        return $this->paginator->paginate($commentsQuery,$page,$limit);
+        $articleQuery = $this->articleRepository->findForPagination($category);
+        return $this->paginator->paginate($articleQuery,$page,$limit);
     }
-
 }

@@ -20,7 +20,7 @@
         {% endif %}
         <hr>
         <div class="comment-list">
-            {% for comment in article.comments   %}
+            {% for comment in comments   %}
                 {% include 'comment/index.html.twig' with {comment} %}
             {% endfor %}
         </div>

@@ -40,8 +40,7 @@ class App{
                 const commentList =  document.querySelector('.comment-list');
                 const commentCard =  document.querySelector('.comment-count');
                 const commentContent =  document.querySelector('#comment-content');
-                commentList.insertAdjacentElement('beforeend',json.message);
-                commentList.lastElementChild.scrollIntoView();
+                commentList.insertAdjacentElement('afterbegin',json.message);
                 commentCard.innerText = response.numberComments;
                 commentContent.value = '';
 
