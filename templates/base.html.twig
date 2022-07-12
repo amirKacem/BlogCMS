@@ -62,12 +62,28 @@
                             </li>
                         {% endif %}
                     {% endfor %}
+                    {% if not is_granted('IS_AUTHENTICATED_FULLY') %}
                     <li class="nav-item">
                         <a href="{{ path('app_register') }}" class="nav-link text-dark" >S'inscrire</a>
                     </li>
                     <li class="nav-item">
-                        <a href="#" class="nav-link text-dark" aria-current="page">Se connecter</a>
+                        <a href="{{ path('login') }}" class="nav-link text-dark">Se connecter</a>
                     </li>
+                    {% else %}
+                        <div class="dropdown">
+                            <a class="nav nav-link text-dark dropdown-toggle" href="#" role="button"
+                               id="dropdownUserLink" data-bs-toggle="dropdown" aria-expanded="false">
+                                {{ app.user.username|capitalize }}</a>
+                            <ul class="dropdown-menu">
+                                <li>
+                                    <a class="dropdown-item" href="">Mon Profil</a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item" href="{{ path('app_logout') }}">Deconnexion</a>
+                                </li>
+                            </ul>
+                        </div>
+                    {% endif %}
 
                 </ul>
             </header>
