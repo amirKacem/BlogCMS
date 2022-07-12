@@ -8,5 +8,18 @@
         <hr>
 
         {{ article.content|raw }}
+        <h2 class="comment-title mt-5">
+            <span class="comment-count">{{ article.comments|length }} </span>Commentaire(s)
+        </h2>
+        <hr>
+
+        <div class="comment-area mb-5">
+            {{ form(commentForm,{ 'attr' : {'class': 'commentForm'}}) }}
+        </div>
+        <div class="comment-list">
+            {% for comment in article.comments   %}
+                {% include 'comment/index.html.twig' with {comment} %}
+            {% endfor %}
+        </div>
     </div>
 {% endblock %}

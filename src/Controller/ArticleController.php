@@ -3,6 +3,8 @@
 namespace App\Controller;
 
 use App\Entity\Article;
+use App\Entity\Comment;
+use App\Form\CommentType;
 use phpDocumentor\Reflection\Types\This;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -16,8 +18,11 @@ class ArticleController extends AbstractController
         if(!$article){
             return $this->redirectToRoute('home');
         }
-        return $this->render('articles/show.html.twig', [
+        $comment = new Comment($article);
+        $commentForm = $this->createForm(CommentType::class,$comment);
+        return $this->renderForm('articles/show.html.twig', [
             'article' => $article,
+            'commentForm' => $commentForm
         ]);
     }
 }
