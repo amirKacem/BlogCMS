@@ -12,7 +12,8 @@ class ArticleService
     public function __construct(
         private RequestStack $requestStack,
         private ArticleRepository $articleRepository,
-        private PaginatorInterface $paginator
+        private PaginatorInterface $paginator,
+        private OptionService $optionService
     )
     {
     }
@@ -21,7 +22,7 @@ class ArticleService
     {
         $request =  $this->requestStack->getMainRequest();
         $page = $request->get('page',1);
-        $limit = 2;
+        $limit = $this->optionService->getValue('blog_articles_limit');
         $articleQuery = $this->articleRepository->findForPagination($category);
         return $this->paginator->paginate($articleQuery,$page,$limit);
     }

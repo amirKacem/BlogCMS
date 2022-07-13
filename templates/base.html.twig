@@ -1,4 +1,6 @@
 {% set menus = menu_service.findAll %}
+{% set options = option_service.findAll %}
+{% dump(options) %}
 <!DOCTYPE html>
 <html lang="fr">
     <head>
@@ -20,7 +22,7 @@
             <div class="container d-flex flex-wrap">
                 <div class="dropdown">
                     <a class="nav nav-link dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
-                        Mon Blog
+                        {{ options['blog_title'] }}
                     </a>
                     <ul class="dropdown-menu" aria-labelledby="dropdownMenuButtonAdminDashboard">
                         <li><a class="dropdown-item" href="{{ path('admin') }}">Tableau de bord</a></li>
@@ -31,7 +33,7 @@
                 </div>
                 <div class="dropdown">
                     <a class="nav nav-link dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
-                        Mon Blog
+                        Ajouter
                     </a>
                     <ul class="dropdown-menu" aria-labelledby="dropdownMenuButtonAdminAdd">
                         <li><a class="dropdown-item" href="{{ ea_gen_url('ArticleCrudController','new') }}">Article</a></li>
@@ -44,7 +46,7 @@
         <div class="container">
             <header class="d-flex flex-wrap justify-content-center py-3 mb-4 border-bottom">
                 <a class="d-flex align-items-center mb-3  me-md-auto text-dark text-decoration-none"  href="{{ path('home') }}">
-                    <span class="fs-4">Mon Blog</span>
+                    <span class="fs-4">  {{ options['blog_title'] }}</span>
                 </a>
                 <ul class="nav nav-pills align-items-center">
                     {% for menu in menus %}
@@ -67,9 +69,11 @@
                         {% endif %}
                     {% endfor %}
                     {% if not is_granted('IS_AUTHENTICATED_FULLY') %}
+                        {% if '1'  == options['users_can_register'] %}
                     <li class="nav-item">
                         <a href="{{ path('app_register') }}" class="nav-link text-dark" >S'inscrire</a>
                     </li>
+                            {% endif %}
                     <li class="nav-item">
                         <a href="{{ path('login') }}" class="nav-link text-dark">Se connecter</a>
                     </li>
@@ -96,7 +100,7 @@
 
         <div class="container">
             <footer class="d-flex flex-wrap justify-content-between align-items-center py-3 my-4 border-top">
-                <span class="copyright">&copy {{ 'now'|date('Y') }} MyBlog. Tous droits réservés.</span>
+                <span class="copyright">&copy {{ 'now'|date('Y') }} {{ options['blog_copyright']}}</span>
             </footer>
         </div>
     </body>

@@ -7,6 +7,7 @@ use App\Entity\Category;
 use App\Entity\Comment;
 use App\Entity\Media;
 use App\Entity\Menu;
+use App\Entity\Option;
 use App\Entity\Page;
 use App\Entity\User;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
@@ -79,6 +80,12 @@ class DashboardController extends AbstractDashboardController
 
                 MenuItem::linkToCrud('Tous les comptes', 'fas fa-user-friends', User::class),
                 MenuItem::linkToCrud('Ajouter', 'fas fa-newspaper', User::class)->setAction(Crud::PAGE_NEW),
+
+            ]);
+
+            yield MenuItem::subMenu('Réglages', 'fas fa-cog')->setSubItems([
+
+                MenuItem::linkToCrud('Général', 'fas fa-cog', Option::class),
 
             ]);
         }

@@ -17,14 +17,24 @@ class Option
     #[ORM\Column(type: 'string', length: 255)]
     private $label;
 
-    #[ORM\Column(type: 'string', length: 255)]
-    private $nom;
+    #[ORM\Column(type: 'string', length: 255, unique: true)]
+    private $name;
 
-    #[ORM\Column(type: 'string', length: 255, nullable: true)]
+    #[ORM\Column(type: 'text', nullable: true)]
     private $value;
 
     #[ORM\Column(type: 'string', length: 255)]
     private $type;
+
+
+    public function __construct(string $label,string $name,string $value,string $type)
+    {
+        $this->label = $label;
+        $this->name = $name;
+        $this->value = $value;
+        $this->type = $type;
+    }
+
 
     public function getId(): ?int
     {
@@ -43,14 +53,14 @@ class Option
         return $this;
     }
 
-    public function getNom(): ?string
+    public function getName(): ?string
     {
-        return $this->nom;
+        return $this->name;
     }
 
-    public function setNom(string $nom): self
+    public function setName(string $name): self
     {
-        $this->nom = $nom;
+        $this->name = $name;
 
         return $this;
     }
@@ -77,5 +87,10 @@ class Option
         $this->type = $type;
 
         return $this;
+    }
+
+    public function __toString(): string
+    {
+        return $this->value;
     }
 }
