@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use App\Repository\CommentRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Ignore;
 
 #[ORM\Entity(repositoryClass: CommentRepository::class)]
 class Comment
@@ -20,16 +21,19 @@ class Comment
     private $createdAt;
 
     #[ORM\ManyToOne(targetEntity: Article::class, inversedBy: 'comments')]
+    #[Ignore]
     private $article;
 
     #[ORM\ManyToOne(targetEntity: User::class, inversedBy: 'comments')]
     #[ORM\JoinColumn(nullable: false)]
+    #[Ignore]
     private $user;
 
 
-    public function __construct(Article $article)
+    public function __construct(Article $article,User $user)
     {
         $this->article = $article;
+        $this->user = $user;
     }
 
     public function getId(): ?int

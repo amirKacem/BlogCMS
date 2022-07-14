@@ -25,8 +25,8 @@ class CommentRepository extends ServiceEntityRepository
 
     public function findForPagination(?Article $article = null): Query
     {
-        $qb = $this->createQueryBuilder('c')
-            ->orderBy('c.createdAt','DESC');
+        $qb = $this->createQueryBuilder('a')
+            ->orderBy('a.createdAt','DESC');
 
         if($article){
             $qb->leftJoin('a.article','c')

@@ -16,15 +16,21 @@ class ArticleController extends AbstractController
     #[Route('/article/{slug}', name: 'article_show')]
     public function show(?Article $article,CommentService $commentService): Response
     {
-        if(!$article){
+        if (!$article) {
             return $this->redirectToRoute('home');
         }
-        $comment = new Comment($article);
-        $commentForm = $this->createForm(CommentType::class,$comment);
-        return $this->renderForm('articles/show.html.twig', [
+
+        $parameters = [
             'article' => $article,
-            'comments' => $commentService->getPaginatedComments($article),
-            'commentForm' => $commentForm
-        ]);
+            'comments' =>  $commentService->getPaginatedComments($article)
+        ];
+
+        if ($this->isGranted('IS_AUTHENTICATED_FULLY')) {
+            $commentForm = $this->createForm(CommentType::class,  new Comment($article, $this->getUser()));
+            $parameters['commentForm'] = $commentForm;
+
+        }
+
+        return $this->renderForm('articles/show.html.twig', $parameters);
     }
 }

@@ -12,7 +12,7 @@
             <span class="comment-count">{{ article.comments|length }} </span>Commentaire(s)
         </h2>
 
-        {% if not is_granted('IS_AUTHENTICATED_FULLY') %}
+        {% if  is_granted('IS_AUTHENTICATED_FULLY') %}
         <div class="comment-area mb-5">
             {{ form(commentForm,{ 'attr' : {'class': 'commentForm'}}) }}
         </div>

@@ -31,12 +31,11 @@ class App{
                 method: 'POST',
                 body: new FormData(e.target)
             })
-
             if(!response.ok){
                 return;
             }
             const  json = await response.json();
-            if(json.code === "CONTENT_ADDED_SUCCESSFULLY"){
+            if(json.code === "COMMENT_ADDED_SUCCESSFULLY"){
                 const commentList =  document.querySelector('.comment-list');
                 const commentCard =  document.querySelector('.comment-count');
                 const commentContent =  document.querySelector('#comment-content');

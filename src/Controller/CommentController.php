@@ -20,7 +20,7 @@ class CommentController extends AbstractController
     {
     }
 
-    #[Route('/ajax/comments', name: 'comment_add', methods: ['POST'])]
+    #[Route('/ajax/comment', name: 'comment_add', methods: ['POST'])]
     public function addComment(Request $request): Response
     {
         if (!$this->isGranted('IS_AUTHENTICATED_FULLY')) {
@@ -54,7 +54,7 @@ class CommentController extends AbstractController
         return $this->json([
             'code' => 'COMMENT_ADDED_SUCCESSFULLY',
             'detail' => [
-                'comment' => $this->commentService->normalize($comment),
+                'comment' => $comment,
                 'numberOfComments' => $this->commentRepo->count(['article' => $article])
             ],
             'message' => $html,
