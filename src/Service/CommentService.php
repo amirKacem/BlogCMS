@@ -11,6 +11,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\Security\Core\Security;
+use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 
 class CommentService
 {
@@ -20,7 +21,8 @@ class CommentService
         private PaginatorInterface $paginator,
         private OptionService $optionService,
         private Security $security,
-        private EntityManagerInterface $em
+        private EntityManagerInterface $em,
+        private NormalizerInterface $normalizer
     )
     {
     }
@@ -35,7 +37,7 @@ class CommentService
         return $this->paginator->paginate($commentsQuery,$page,$limit);
     }
 
-    public function add($data,Article $article)
+    public function add($data,Article $article): ?Comment
     {
         $comment = new Comment($article,$this->security->getUser());
         $comment->setContent($data['content']);
@@ -46,6 +48,13 @@ class CommentService
 
         return $comment;
 
+    }
+
+    public function normalize(Comment $comment): array
+    {
+        return $this->normalizer->normalize($comment,context : [
+            'groups' => 'comment'
+        ]);
     }
 
 }

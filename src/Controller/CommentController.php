@@ -54,7 +54,7 @@ class CommentController extends AbstractController
         return $this->json([
             'code' => 'COMMENT_ADDED_SUCCESSFULLY',
             'detail' => [
-                'comment' => $comment,
+                'comment' => $this->commentService->normalize($comment),
                 'numberOfComments' => $this->commentRepo->count(['article' => $article])
             ],
             'message' => $html,

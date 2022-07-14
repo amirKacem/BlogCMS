@@ -38,9 +38,11 @@ class App{
             if(json.code === "COMMENT_ADDED_SUCCESSFULLY"){
                 const commentList =  document.querySelector('.comment-list');
                 const commentCard =  document.querySelector('.comment-count');
-                const commentContent =  document.querySelector('#comment-content');
-                commentList.insertAdjacentElement('afterbegin',json.message);
-                commentCard.innerText = response.numberComments;
+                const commentContent =  document.querySelector('#comment_content');
+                var comment = document.createElement('div');
+                comment.innerHTML = json.message;
+                commentList.insertAdjacentElement('afterbegin',comment);
+                commentCard.innerText = ' ' + json.detail.numberOfComments + ' ';
                 commentContent.value = '';
 
             }
